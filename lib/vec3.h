@@ -7,8 +7,8 @@
 
 class vec3 {
 public:
-    vec3() {}
-    vec3(float e0, float e1, float e2) { e[0] = e0; e[1] = e1; e[2] = e2; }
+    vec3() = default;
+    vec3(float e0, float e1, float e2)  { e[0] = e0; e[1] = e1; e[2] = e2; }
     inline float x() const { return e[0]; }
     inline float y() const { return e[1]; }
     inline float z() const { return e[2]; }
@@ -110,7 +110,7 @@ inline vec3& vec3::operator*=(const float t) {
 }
 
 inline vec3& vec3::operator/=(const float t) {
-    float k = (float)1.0/t;
+    auto k = static_cast<float>(1.0/t);
 
     e[0]  *= k;
     e[1]  *= k;
@@ -129,7 +129,7 @@ inline std::ostream& operator<<(std::ostream &os, const vec3 &t) {
 }
 
 inline void vec3::make_unit_vector() {
-    float k = (float)1.0 / sqrt(e[0]*e[0] + e[1]*e[1] + e[2]*e[2]);
+    auto k = static_cast<float>(1.0 / sqrt(e[0]*e[0] + e[1]*e[1] + e[2]*e[2]));
     e[0] *= k; e[1] *= k; e[2] *= k;
 }
 
