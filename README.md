@@ -6,5 +6,5 @@ And the cover image creating project.
 
 ##### In-One-Weekend
 
-![image](https://github.com/DanielDFY/Peter-Shirley-Ray-Tracing-Lib/In-One-Weekend-cover-image-creating/Output.ppm)
+![image](https://github.com/DanielDFY/Peter-Shirley-Ray-Tracing-Lib/In-One-Weekend-cover-image-creating/Output.png)
 
