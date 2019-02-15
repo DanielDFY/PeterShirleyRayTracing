@@ -4,7 +4,7 @@ C++ source code of classes in << Ray Tracing in One Weekend >> —— Peter Shir
 
 And the cover image creating project.
 
-####In-One-Weekend
+#### In-One-Weekend
 
 <img alt="in-one-weekend cover image" src="In-One-Weekend%20cover%20image%20creating/Output.png">
 
