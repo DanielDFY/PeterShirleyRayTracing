@@ -4,7 +4,7 @@ My C++ source code for Ray Tracing book series by Peter Shirley.
 
 
 
-The image format used in these books is `.ppm`. If you prefer other formats, I put `stb` library in this repository as a submodule under `include/stb`.
+The image format used in these books is `.ppm`. If you prefer other formats, I put [stb library](https://github.com/nothings/stb) in this repository as a submodule under `include/stb`.
 
 In each `main.cpp` file, I provide both the code to produce `.ppm` image and the code to produce `.png` image, wrapped by macro `PPM` and `PNG` respectively. You can enable/disable each type of output by define/remove its corresponding macro at the beginning of the file.
 
