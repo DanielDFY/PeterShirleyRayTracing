@@ -1,8 +1,12 @@
 #include <fstream>
 
-// for .png
-// #define STB_IMAGE_WRITE_IMPLEMENTATION
-// #include "../../include/stb/stb_image_write.h"
+#define PPM	// produce output.ppm
+#define PNG	// produce output.png
+
+#ifdef PNG
+	#define STB_IMAGE_WRITE_IMPLEMENTATION
+	#include "../../include/stb/stb_image_write.h"
+#endif
 
 int main() {
 	/* image config */
@@ -10,17 +14,21 @@ int main() {
 	constexpr int imageHeight = 256;
 
 	/* image output file */
-	// for .ppm
-	std::ofstream outputStream("output.ppm");
-	outputStream << "P3\n" << imageWidth << ' ' << imageHeight << "\n255\n";	// .ppm header
+	#ifdef PPM
+		std::ofstream outputStream("output.ppm");
+		// .ppm header
+		outputStream << "P3\n" << imageWidth << ' ' << imageHeight << "\n255\n";	
+	#endif
 	
-	// for .png
-	// constexpr int channelNum = 3;
-	// constexpr int imageSize = imageHeight * imageWidth * channelNum;
-	// constexpr int strideInBytes = imageWidth * channelNum * sizeof(unsigned char);
-	// unsigned char pixelData[imageSize];
-	// memset(pixelData, 0, imageSize);
-	// int currPixelIndex = 0;
+	#ifdef PNG
+		constexpr int channelNum = 3;
+		constexpr int imageSize = imageHeight * imageWidth * channelNum;
+		constexpr int strideInBytes = imageWidth * channelNum * sizeof(unsigned char);
+		unsigned char pixelData[imageSize];
+		memset(pixelData, 0, imageSize);
+		int currPixelIndex = 0;
+	#endif
+	
 	
 	/*
 	 * the pixels are written out in rows with pixels left to right.
@@ -35,30 +43,34 @@ int main() {
 			const double g = static_cast<double>(col) / static_cast<double>(imageWidth - 1);
 			const double b = 0.25;
 
-			// for .ppm
-			const auto ir = static_cast<int>(255.999 * r);
-			const auto ig = static_cast<int>(255.999 * g);
-			const auto ib = static_cast<int>(255.999 * b);
-			outputStream << ir << ' ' << ig << ' ' << ib << '\n';
-			
-			// for .png
-			// const auto ir = static_cast<unsigned char>(255.999 * r);
-			// const auto ig = static_cast<unsigned char>(255.999 * g);
-			// const auto ib = static_cast<unsigned char>(255.999 * b);
-			// pixelData[currPixelIndex++] = ir;
-			// pixelData[currPixelIndex++] = ig;
-			// pixelData[currPixelIndex++] = ib;
+			#ifdef PPM
+				const auto ir = static_cast<int>(255.999 * r);
+				const auto ig = static_cast<int>(255.999 * g);
+				const auto ib = static_cast<int>(255.999 * b);
+				outputStream << ir << ' ' << ig << ' ' << ib << '\n';
+			#endif
+
+			#ifdef PNG
+				const auto ucr = static_cast<unsigned char>(255.999 * r);
+				const auto ucg = static_cast<unsigned char>(255.999 * g);
+				const auto ucb = static_cast<unsigned char>(255.999 * b);
+				pixelData[currPixelIndex++] = ucr;
+				pixelData[currPixelIndex++] = ucg;
+				pixelData[currPixelIndex++] = ucb;
+			#endif
 		}
 	}
 
 	// print complete info
 	printf("\rProcessing[100.00%%]\nComplete!");
 
-	// for .ppm
-	outputStream.close();
+	#ifdef PPM
+		outputStream.close();
+	#endif
 	
-	// for .png
-	// stbi_write_png("output.png", imageWidth, imageHeight, channelNum, pixelData, strideInBytes);
+	#ifdef PNG
+		stbi_write_png("output.png", imageWidth, imageHeight, channelNum, pixelData, strideInBytes);
+	#endif
 	
 	return 0;
 }
