@@ -62,7 +62,7 @@ int main() {
 	}
 
 	// print complete info
-	printf("\rProcessing[100.00%%]\nComplete!");
+	printf("\rProcessing[100.00%%]\nComplete!\n");
 
 	#ifdef PPM
 		outputStream.close();
