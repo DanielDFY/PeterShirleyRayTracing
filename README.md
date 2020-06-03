@@ -10,5 +10,5 @@ The image format used in these books is `.ppm`. If you prefer other formats, I p
 
 ### In-One-Weekend
 
-![InOneWeekendCover](InOneWeekend\InOneWeekendCover.png)
+![InOneWeekendCover](InOneWeekend/InOneWeekendCover.png)
 
