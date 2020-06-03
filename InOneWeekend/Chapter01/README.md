@@ -2,7 +2,7 @@
 
 ### The PPM Image Format
 
-![img.ppm-example](note images\img.ppm-example.jpg)
+![img.ppm-example](note%20images/img.ppm-example.jpg)
 
 
 
