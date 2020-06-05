@@ -17,4 +17,6 @@ single-file public domain (or MIT licensed) libraries for C/C++.
 
 ### Output Display
 
+Produce a simple image with gradient color.
+
 ![output](output.png)

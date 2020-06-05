@@ -1,6 +1,6 @@
 # Peter Shirley Ray Tracing
 
-My C++ source code for Ray Tracing book series by Peter Shirley.
+My C++ source code for [ray tracing book series](https://raytracing.github.io/) by Peter Shirley.
 
 
 
