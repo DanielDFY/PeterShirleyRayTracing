@@ -2,6 +2,7 @@
 #include <fstream>
 
 #include <Color.h>
+#include <Ray.h>
 
 #define PPM	// produce output.ppm
 #define PNG	// produce output.png
@@ -11,10 +12,17 @@
 #include <stb/stb_image_write.h>
 #endif
 
+Color rayColor(const Ray& r) {
+	const Vec3 unitDirection = unitVec3(r.direction());
+	const double t = 0.5 * (unitDirection.y() + 1.0);
+	return (1.0 - t) * Color(1.0, 1.0, 1.0) + t * Color(0.5, 0.7, 1.0);
+}
+
 int main() {
 	/* image config */
-	constexpr int imageWidth = 256;
-	constexpr int imageHeight = 256;
+	constexpr double aspectRatio = 16.0 / 9.0;
+	constexpr int imageWidth = 384;
+	constexpr int imageHeight = static_cast<int>(imageWidth / aspectRatio);
 
 	/* image output file */
 	const std::string fileName("output");
@@ -43,6 +51,17 @@ int main() {
 	int idx = 0;
 	#endif
 
+	/* camera config */
+	constexpr double viewPortHeight = 2.0;
+	constexpr double viewPortWidth = aspectRatio * viewPortHeight;
+	constexpr double focalLength = 1.0;
+
+	const Point3 origin(0.0, 0.0, 0.0);
+	const Vec3 horizontal(viewPortWidth, 0.0, 0.0);
+	const Vec3 vertical(0.0, viewPortHeight, 0.0);
+	const Point3 lowerLeftCorner = origin - horizontal / 2 - vertical / 2 - Vec3(0.0, 0.0, focalLength);
+	
+	
 	/*
 	 * the pixels are written out in rows with pixels left to right.
 	 * the rows are written out from top to bottom.
@@ -52,11 +71,13 @@ int main() {
 		printf("\rProcessing[%.2lf%%]", static_cast<double>(row * 100.0) / static_cast<double>(imageHeight - 1));
 
 		for (int col = 0; col < imageWidth; ++col) {
-			Color color(
-				static_cast<double>(row) / static_cast<double>(imageHeight - 1), 
-				static_cast<double>(col) / static_cast<double>(imageWidth - 1),
-				0.25);
+			auto u = static_cast<double>(col) / static_cast<double>(imageWidth - 1);
+			auto v = static_cast<double>(row) / static_cast<double>(imageHeight - 1);
+			
+			Ray r(origin, lowerLeftCorner + u * horizontal + v * vertical - origin);
 
+			Color color = rayColor(r);
+			
 			#ifdef PPM
 			// write pixel data to output.ppm
 			writeColor8bit(outputStream, color);

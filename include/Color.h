@@ -5,8 +5,16 @@
 
 class Color : public Vec3 {
 public:
-    Color() : Vec3() {};
-    Color(double e1, double e2, double e3) : Vec3(e1, e2, e3) {};
+    Color() = default;
+    Color(double e1, double e2, double e3) : Vec3(e1, e2, e3) {}
+    Color(Vec3 v) : Color(v.x(), v.y(), v.z()) {}
+
+    Color& operator+=(const Color& v) {
+        elem[0] += v.elem[0];
+        elem[1] += v.elem[1];
+        elem[2] += v.elem[2];
+        return *this;
+    }
 	
     double r() const { return elem[0]; }
     double g() const { return elem[1]; }

@@ -6,7 +6,7 @@
 class Vec3 {
 public:
 	Vec3() = default;
-	Vec3(double e1, double e2, double e3) : elem{ e1, e2, e3 } {};
+	Vec3(double e1, double e2, double e3) : elem{ e1, e2, e3 } {}
 
 	double x() const { return elem[0]; }
 	double y() const { return elem[1]; }
@@ -18,8 +18,8 @@ public:
 
 	Vec3& operator+=(const Vec3& v) {
 		elem[0] += v.elem[0];
-		elem[0] += v.elem[0];
-		elem[0] += v.elem[0];
+		elem[1] += v.elem[1];
+		elem[2] += v.elem[1];
 		return *this;
 	}
 
@@ -42,43 +42,47 @@ public:
 		return sqrt(lengthSquared());
 	}
 	
-public:
+protected:
 	double elem[3];
 };
 
 // Utility functions
 inline std::ostream& operator<<(std::ostream& out, const Vec3& v) {
-	return out << v.elem[0] << ' ' << v.elem[1] << ' ' << v.elem[2];
+	return out << v.x() << ' ' << v.y() << ' ' << v.z();
 }
 
 inline Vec3 operator+(const Vec3& lhs, const Vec3& rhs) {
-	return { lhs.elem[0] + rhs.elem[0], lhs.elem[1] + rhs.elem[1], lhs.elem[2] + rhs.elem[2] };
+	return { lhs.x() + rhs.x(), lhs.y() + rhs.y(), lhs.z() + rhs.z() };
 }
 
 inline Vec3 operator-(const Vec3& lhs, const Vec3& rhs) {
-	return { lhs.elem[0] - rhs.elem[0], lhs.elem[1] - rhs.elem[1], lhs.elem[2] - rhs.elem[2] };
+	return { lhs.x() - rhs.x(), lhs.y() - rhs.y(), lhs.z() - rhs.z() };
 }
 
 inline Vec3 operator*(const Vec3& lhs, const Vec3& rhs) {
-	return { lhs.elem[0] * rhs.elem[0], lhs.elem[1] * rhs.elem[1], lhs.elem[2] * rhs.elem[2] };
+	return { lhs.x() * rhs.x(), lhs.y() * rhs.y(), lhs.z() * rhs.z() };
+}
+
+inline Vec3 operator*(const double k, const Vec3& v) {
+	return { k * v.x(), k * v.y(), k * v.z() };
 }
 
 inline Vec3 operator*(const Vec3& v, const double k) {
-	return v * k;
+	return k * v;
 }
 
 inline Vec3 operator/(const Vec3& v, const double k) {
-	return v * (1 / k);
+	return (1 / k) * v;
 }
 
 inline double dot(const Vec3& lhs, const Vec3& rhs) {
-	return lhs.elem[0] * rhs.elem[0] + lhs.elem[1] * rhs.elem[1] + lhs.elem[2] * rhs.elem[2];
+	return lhs.x() * rhs.x() + lhs.y() * rhs.y() + lhs.z() * rhs.z();
 }
 
 inline double cross(const Vec3& lhs, const Vec3& rhs) {
-	return lhs.elem[1] * rhs.elem[2] - lhs.elem[2] * rhs.elem[1]
-		+ lhs.elem[2] * rhs.elem[0] - lhs.elem[0] * rhs.elem[2]
-		+ lhs.elem[0] * rhs.elem[1] - lhs.elem[1] * rhs.elem[0];
+	return lhs.y() * rhs.z() - lhs.z() * rhs.y()
+		+ lhs.z() * rhs.x() - lhs.x() * rhs.z()
+		+ lhs.x() * rhs.y() - lhs.y() * rhs.x();
 }
 
 inline Vec3 unitVec3(Vec3 v) {
