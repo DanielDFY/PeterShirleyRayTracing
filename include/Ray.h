@@ -14,7 +14,7 @@ public:
 
 	Point3 at(double t) const { return ori + t * dir;}
 
-public:
+private:
 	Point3 ori;
 	Vec3 dir;	// may not be unit length
 };
