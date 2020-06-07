@@ -2,13 +2,13 @@
 
 ### Ray-Sphere Intersection
 
-(x - C<sub>x</sub>)<sup>2</sup> + (y - C<sub>y</sub>)<sup>2</sup> + (z - C<sub>z</sub>)<sup>2</sup> = r<sup>2</sup>
+![](http://latex.codecogs.com/gif.latex?(x - C_x)^2 + (y - C_y)^2 + (z - C_z)^2 = r^2) 
 
-<=> (**P** - **C**) &sdot; (**P** - **C**) = r<sup>2</sup>
+<=> ![](http://latex.codecogs.com/gif.latex?(\mathbf{P} - \mathbf{C}) \cdot (\mathbf{P} - \mathbf{C}) = r^2)
 
-<=> (**A** + t**b** - C) &sdot; (**A** + t**b** - C) = r<sup>2</sup>
+<=> ![](http://latex.codecogs.com/gif.latex?(\mathbf{A} + t \mathbf{b} - \mathbf{C})\cdot(\mathbf{A} + t \mathbf{b} - \mathbf{C}) = r^2)
 
-<=> t<sup>2</sup>**b**&sdot;**b** + 2t**b** &sdot; (A - C) + (A - C) &sdot; (A - C) - r<sup>2</sup> = 0
+<=> ![](http://latex.codecogs.com/gif.latex?t^2 \mathbf{b} \cdot \mathbf{b}+ 2t \mathbf{b} \cdot (\mathbf{A}-\mathbf{C}) + (\mathbf{A}-\mathbf{C}) \cdot (\mathbf{A}-\mathbf{C}) - r^2 = 0)
 
 ![fig.ray-sphere](note images/fig.ray-sphere.jpg)
 

@@ -61,7 +61,6 @@ int main() {
 	const Vec3 vertical(0.0, viewPortHeight, 0.0);
 	const Point3 lowerLeftCorner = origin - horizontal / 2 - vertical / 2 - Vec3(0.0, 0.0, focalLength);
 	
-	
 	/*
 	 * the pixels are written out in rows with pixels left to right.
 	 * the rows are written out from top to bottom.
@@ -71,12 +70,12 @@ int main() {
 		printf("\rProcessing[%.2lf%%]", static_cast<double>(row * 100.0) / static_cast<double>(imageHeight - 1));
 
 		for (int col = 0; col < imageWidth; ++col) {
-			auto u = static_cast<double>(col) / static_cast<double>(imageWidth - 1);
-			auto v = static_cast<double>(row) / static_cast<double>(imageHeight - 1);
+			const auto u = static_cast<double>(col) / static_cast<double>(imageWidth - 1);
+			const auto v = 1.0 - static_cast<double>(row) / static_cast<double>(imageHeight - 1);
 			
-			Ray r(origin, lowerLeftCorner + u * horizontal + v * vertical - origin);
+			const Ray r(origin, lowerLeftCorner + u * horizontal + v * vertical - origin);
 
-			Color color = rayColor(r);
+			const Color color = rayColor(r);
 			
 			#ifdef PPM
 			// write pixel data to output.ppm

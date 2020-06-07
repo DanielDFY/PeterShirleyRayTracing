@@ -1,8 +1,13 @@
 #include <iostream>
 #include <fstream>
+#include <stdio.h>
 
 #include <Color.h>
 #include <Ray.h>
+#include <HittableList.h>
+#include <Sphere.h>
+
+#include <helperUtils.h>
 
 #define PPM	// produce output.ppm
 #define PNG	// produce output.png
@@ -12,18 +17,10 @@
 #include <stb/stb_image_write.h>
 #endif
 
-bool hitSphere(const Point3& center,const double radius, const Ray& r) {
-	const Vec3 oc = r.origin() - center;
-	const double a = dot(r.direction(), r.direction());
-	const double b = 2.0 * dot(oc, r.direction());
-	const double c = dot(oc, oc) - radius * radius;
-	const double discriminant = b * b - 4 * a * c;
-	return (discriminant > 0);
-}
-
-Color rayColor(const Ray& r) {
-	if (hitSphere(Point3(0.0, 0.0, -1.0), 0.5, r)) {
-		return {1.0, 0.0, 0.0};
+Color rayColor(const Ray& r, const Hittable& hittable) {
+	HitRecord rec;
+	if (hittable.hit(r, 0.0, DOUBLE_INFINITY, rec)) {
+		return 0.5 * (rec.normal + Color(1.0, 1.0, 1.0));
 	}
 	
 	const Vec3 unitDirection = unitVec3(r.direction());
@@ -73,6 +70,11 @@ int main() {
 	const Vec3 horizontal(viewPortWidth, 0.0, 0.0);
 	const Vec3 vertical(0.0, viewPortHeight, 0.0);
 	const Point3 lowerLeftCorner = origin - horizontal / 2 - vertical / 2 - Vec3(0.0, 0.0, focalLength);
+
+	// world objects
+	HittableList worldObjects;
+	worldObjects.add(std::make_shared<Sphere>(Point3(0.0, 0.0, -1.0), 0.5));
+	worldObjects.add(std::make_shared<Sphere>(Point3(0.0, -100.5, -1.0), 100.0));
 	
 	/*
 	 * the pixels are written out in rows with pixels left to right.
@@ -83,12 +85,12 @@ int main() {
 		printf("\rProcessing[%.2lf%%]", static_cast<double>(row * 100.0) / static_cast<double>(imageHeight - 1));
 
 		for (int col = 0; col < imageWidth; ++col) {
-			const auto u = static_cast<double>(col) / static_cast<double>(imageWidth - 1);
-			const auto v = 1.0 - static_cast<double>(row) / static_cast<double>(imageHeight - 1);
+			auto u = static_cast<double>(col) / static_cast<double>(imageWidth - 1);
+			auto v = 1.0 - static_cast<double>(row) / static_cast<double>(imageHeight - 1);
 			
-			const Ray r(origin, lowerLeftCorner + u * horizontal + v * vertical - origin);
+			Ray r(origin, lowerLeftCorner - origin + u * horizontal + v * vertical);
 
-			const Color color = rayColor(r);
+			Color color = rayColor(r, worldObjects);
 			
 			#ifdef PPM
 			// write pixel data to output.ppm

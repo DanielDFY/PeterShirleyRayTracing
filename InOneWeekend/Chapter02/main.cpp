@@ -52,7 +52,7 @@ int main() {
 		printf("\rProcessing[%.2lf%%]", static_cast<double>(row * 100.0) / static_cast<double>(imageHeight - 1));
 
 		for (int col = 0; col < imageWidth; ++col) {
-			Color color(
+			const Color color(
 				static_cast<double>(row) / static_cast<double>(imageHeight - 1), 
 				static_cast<double>(col) / static_cast<double>(imageWidth - 1),
 				0.25);

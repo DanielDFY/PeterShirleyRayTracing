@@ -7,14 +7,14 @@ class Ray {
 public:
 	Ray() = default;
 	Ray(const Point3& origin, const Vec3& direction)
-		: ori(origin), dir(direction) {}
+		: _origin(origin), _direction(direction) {}
 
-	Point3 origin() const { return ori; }
-	Vec3 direction() const { return dir; }
+	Point3 origin() const { return _origin; }
+	Vec3 direction() const { return _direction; }
 
-	Point3 at(double t) const { return ori + t * dir;}
+	Point3 at(double t) const { return _origin + t * _direction;}
 
 private:
-	Point3 ori;
-	Vec3 dir;	// may not be unit length
+	Point3 _origin;
+	Vec3 _direction;	// may not be unit length
 };

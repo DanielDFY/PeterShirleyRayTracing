@@ -6,27 +6,27 @@
 class Vec3 {
 public:
 	Vec3() = default;
-	Vec3(double e1, double e2, double e3) : elem{ e1, e2, e3 } {}
+	Vec3(double e1, double e2, double e3) : _elem{ e1, e2, e3 } {}
 
-	double x() const { return elem[0]; }
-	double y() const { return elem[1]; }
-	double z() const { return elem[2]; }
+	double x() const { return _elem[0]; }
+	double y() const { return _elem[1]; }
+	double z() const { return _elem[2]; }
 
-	Vec3 operator-() const { return { -elem[0], -elem[1], -elem[2] }; }
-	double operator[](int i) const { return elem[i]; }
-	double& operator[](int i) { return elem[i]; }
+	Vec3 operator-() const { return { -_elem[0], -_elem[1], -_elem[2] }; }
+	double operator[](int i) const { return _elem[i]; }
+	double& operator[](int i) { return _elem[i]; }
 
-	Vec3& operator+=(const Vec3& v) {
-		elem[0] += v.elem[0];
-		elem[1] += v.elem[1];
-		elem[2] += v.elem[1];
+	Vec3& operator+=(const Vec3& rhs) {
+		_elem[0] += rhs._elem[0];
+		_elem[1] += rhs._elem[1];
+		_elem[2] += rhs._elem[2];
 		return *this;
 	}
 
 	Vec3& operator*=(const double k) {
-		elem[0] *= k;
-		elem[1] *= k;
-		elem[2] *= k;
+		_elem[0] *= k;
+		_elem[1] *= k;
+		_elem[2] *= k;
 		return *this;
 	}
 
@@ -35,7 +35,7 @@ public:
 	}
 
 	double lengthSquared() const {
-		return elem[0] * elem[0] + elem[1] * elem[1] + elem[2] * elem[2];
+		return _elem[0] * _elem[0] + _elem[1] * _elem[1] + _elem[2] * _elem[2];
 	}
 
 	double length() const {
@@ -43,7 +43,7 @@ public:
 	}
 	
 protected:
-	double elem[3];
+	double _elem[3];
 };
 
 // Utility functions
