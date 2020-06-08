@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <stdio.h>
+#include <cstdio>
 
 #include <Color.h>
 #include <Ray.h>
@@ -19,7 +19,7 @@
 
 Color rayColor(const Ray& r, const Hittable& hittable) {
 	HitRecord rec;
-	if (hittable.hit(r, 0.0, DOUBLE_INFINITY, rec)) {
+	if (hittable.hit(r, 0.0, M_DOUBLE_INFINITY, rec)) {
 		return 0.5 * (rec.normal + Color(1.0, 1.0, 1.0));
 	}
 	
@@ -88,7 +88,7 @@ int main() {
 			auto u = static_cast<double>(col) / static_cast<double>(imageWidth - 1);
 			auto v = 1.0 - static_cast<double>(row) / static_cast<double>(imageHeight - 1);
 			
-			Ray r(origin, lowerLeftCorner - origin + u * horizontal + v * vertical);
+			Ray r(origin, lowerLeftCorner + u * horizontal + v * vertical - origin);
 
 			Color color = rayColor(r, worldObjects);
 			

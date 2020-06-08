@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cstdio>
 
 #include <Color.h>
 #include <Ray.h>

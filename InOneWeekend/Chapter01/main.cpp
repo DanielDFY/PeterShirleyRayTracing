@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cstdio>
 
 #define PPM	// produce output.ppm
 #define PNG	// produce output.png

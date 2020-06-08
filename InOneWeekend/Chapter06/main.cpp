@@ -4,6 +4,11 @@
 
 #include <Color.h>
 #include <Ray.h>
+#include <HittableList.h>
+#include <Sphere.h>
+#include <Camera.h>
+
+#include <helperUtils.h>
 
 #define PPM	// produce output.ppm
 #define PNG	// produce output.png
@@ -13,7 +18,12 @@
 #include <stb/stb_image_write.h>
 #endif
 
-Color rayColor(const Ray& r) {
+Color rayColor(const Ray& r, const Hittable& hittable) {
+	HitRecord rec;
+	if (hittable.hit(r, 0.0, M_DOUBLE_INFINITY, rec)) {
+		return 0.5 * (rec.normal + Color(1.0, 1.0, 1.0));
+	}
+	
 	const Vec3 unitDirection = unitVec3(r.direction());
 	const double t = 0.5 * (unitDirection.y() + 1.0);
 	return (1.0 - t) * Color(1.0, 1.0, 1.0) + t * Color(0.5, 0.7, 1.0);
@@ -23,7 +33,8 @@ int main() {
 	/* image config */
 	constexpr double aspectRatio = 16.0 / 9.0;
 	constexpr int imageWidth = 384;
-	constexpr int imageHeight = static_cast<int>(imageWidth / aspectRatio);
+	constexpr auto imageHeight = static_cast<int>(imageWidth / aspectRatio);
+	constexpr int samplesPerPixel = 100;
 
 	/* image output file */
 	const std::string fileName("output");
@@ -53,14 +64,12 @@ int main() {
 	#endif
 
 	/* camera config */
-	constexpr double viewPortHeight = 2.0;
-	constexpr double viewPortWidth = aspectRatio * viewPortHeight;
-	constexpr double focalLength = 1.0;
+	Camera camera;
 
-	const Point3 origin(0.0, 0.0, 0.0);
-	const Vec3 horizontal(viewPortWidth, 0.0, 0.0);
-	const Vec3 vertical(0.0, viewPortHeight, 0.0);
-	const Point3 lowerLeftCorner = origin - horizontal / 2 - vertical / 2 - Vec3(0.0, 0.0, focalLength);
+	// world objects
+	HittableList worldObjects;
+	worldObjects.add(std::make_shared<Sphere>(Point3(0.0, 0.0, -1.0), 0.5));
+	worldObjects.add(std::make_shared<Sphere>(Point3(0.0, -100.5, -1.0), 100.0));
 	
 	/*
 	 * the pixels are written out in rows with pixels left to right.
@@ -71,22 +80,27 @@ int main() {
 		printf("\rProcessing[%.2lf%%]", static_cast<double>(row * 100.0) / static_cast<double>(imageHeight - 1));
 
 		for (int col = 0; col < imageWidth; ++col) {
-			const auto u = static_cast<double>(col) / static_cast<double>(imageWidth - 1);
-			const auto v = 1.0 - static_cast<double>(row) / static_cast<double>(imageHeight - 1);
-			
-			const Ray r(origin, lowerLeftCorner + u * horizontal + v * vertical - origin);
+			Color pixelColor(0.0, 0.0, 0.0);
+			for (size_t s = 0; s < samplesPerPixel; ++s) {
+				const auto u = (static_cast<double>(col) + randomDouble()) / static_cast<double>(imageWidth - 1);
+				const auto v = 1.0 - (static_cast<double>(row) + randomDouble()) / static_cast<double>(imageHeight - 1);
 
-			const Color color = rayColor(r);
+				const Ray r = camera.getRay(u, v);
+
+				pixelColor += rayColor(r, worldObjects);
+			}
 			
+			pixelColor.clamp(samplesPerPixel);
+
 			#ifdef PPM
 			// write pixel data to output.ppm
-			writeColor8bit(outputStream, color);
+			writeColor8bit(outputStream, pixelColor);
 			#endif
 
 			#ifdef PNG
-			const auto ucr = static_cast<unsigned char>(color.r8bit());
-			const auto ucg = static_cast<unsigned char>(color.g8bit());
-			const auto ucb = static_cast<unsigned char>(color.b8bit());
+			const auto ucr = static_cast<unsigned char>(pixelColor.r8bit());
+			const auto ucg = static_cast<unsigned char>(pixelColor.g8bit());
+			const auto ucb = static_cast<unsigned char>(pixelColor.b8bit());
 			// store pixel data
 			pixelDataPtr[idx++] = ucr;
 			pixelDataPtr[idx++] = ucg;
