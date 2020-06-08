@@ -10,7 +10,7 @@ inline double degreeToRadian(const double degree) { return degree * M_PI / 180.0
 
 inline double randomDouble() {
     // returns a random real in [0,1)
-    const unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    const auto seed = static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count());
     static std::mt19937 generator(seed);
     static std::uniform_real_distribution<double> distribution(0.0, 1.0);
     return distribution(generator);

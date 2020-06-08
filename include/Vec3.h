@@ -3,6 +3,8 @@
 #include <iostream>
 #include <cmath>
 
+#include <helperUtils.h>
+
 class Vec3 {
 public:
 	Vec3() = default;
@@ -40,6 +42,14 @@ public:
 
 	double length() const {
 		return sqrt(lengthSquared());
+	}
+
+	inline static Vec3 random() {
+		return Vec3(randomDouble(), randomDouble(), randomDouble());
+	}
+
+	inline static Vec3 random(double min, double max) {
+		return Vec3(randomDouble(min, max), randomDouble(min, max), randomDouble(min, max));
 	}
 	
 protected:
@@ -88,3 +98,9 @@ inline double cross(const Vec3& lhs, const Vec3& rhs) {
 inline Vec3 unitVec3(Vec3 v) {
 	return v / v.length();
 }
+
+Vec3 randomVec3InUnitSphere();
+
+Vec3 randomUnitVec3();
+
+Vec3 randomVec3InHemisphere(const Vec3& normal);

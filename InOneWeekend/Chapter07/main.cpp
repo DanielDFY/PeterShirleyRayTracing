@@ -18,12 +18,17 @@
 #include <stb/stb_image_write.h>
 #endif
 
-Color rayColor(const Ray& r, const Hittable& hittable) {
-	HitRecord rec;
-	if (hittable.hit(r, 0.0, M_DOUBLE_INFINITY, rec)) {
-		return 0.5 * (rec.normal + Color(1.0, 1.0, 1.0));
+Color rayColor(const Ray& r, const Hittable& hittable, const int depthRemaining) {
+	if (depthRemaining <= 0) {
+		return { 0.0, 0.0, 0.0 };
 	}
 	
+	HitRecord rec;
+	if (hittable.hit(r, 0.0001, M_DOUBLE_INFINITY, rec)) {
+		const Point3 target = rec.point + rec.normal + randomUnitVec3();
+		return 0.5 * rayColor(Ray(rec.point, target - rec.point), hittable, depthRemaining - 1);
+	}
+
 	const Vec3 unitDirection = unitVec3(r.direction());
 	const double t = 0.5 * (unitDirection.y() + 1.0);
 	return (1.0 - t) * Color(1.0, 1.0, 1.0) + t * Color(0.5, 0.7, 1.0);
@@ -35,6 +40,7 @@ int main() {
 	constexpr int imageWidth = 384;
 	constexpr auto imageHeight = static_cast<int>(imageWidth / aspectRatio);
 	constexpr int samplesPerPixel = 100;
+	constexpr int maxDepth = 50;
 
 	/* image output file */
 	const std::string fileName("output");
@@ -70,7 +76,7 @@ int main() {
 	HittableList worldObjects;
 	worldObjects.add(std::make_shared<Sphere>(Point3(0.0, 0.0, -1.0), 0.5));
 	worldObjects.add(std::make_shared<Sphere>(Point3(0.0, -100.5, -1.0), 100.0));
-	
+
 	/*
 	 * the pixels are written out in rows with pixels left to right.
 	 * the rows are written out from top to bottom.
@@ -87,11 +93,12 @@ int main() {
 
 				const Ray r = camera.getRay(u, v);
 
-				pixelColor += rayColor(r, worldObjects);
+				pixelColor += rayColor(r, worldObjects, maxDepth);
 			}
-			
-			pixelColor /= samplesPerPixel;
 
+			pixelColor /= samplesPerPixel;
+			pixelColor.gammaCorrect();
+			
 			#ifdef PPM
 			// write pixel data to output.ppm
 			writeColor8bit(outputStream, pixelColor);

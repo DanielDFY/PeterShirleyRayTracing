@@ -2,13 +2,13 @@
 
 ### Ray-Sphere Intersection
 
-![](http://latex.codecogs.com/gif.latex?(x - C_x)^2 + (y - C_y)^2 + (z - C_z)^2 = r^2) 
+![](http://latex.codecogs.com/gif.latex?(x%20-%20Cx)^2%20+%20(y%20-%20C_y)^2%20+%20(z%20-%20C_z)^2%20=%20r^2) 
 
-<=> ![](http://latex.codecogs.com/gif.latex?(\mathbf{P} - \mathbf{C}) \cdot (\mathbf{P} - \mathbf{C}) = r^2)
+<=> ![](http://latex.codecogs.com/gif.latex?(P%20-%20C)%20\cdot%20(P%20-%20C)%20=%20r^2)
 
-<=> ![](http://latex.codecogs.com/gif.latex?(\mathbf{A} + t \mathbf{b} - \mathbf{C})\cdot(\mathbf{A} + t \mathbf{b} - \mathbf{C}) = r^2)
+<=> ![](http://latex.codecogs.com/gif.latex?(A%20+%20t%20b%20-%20C)\cdot(A%20+%20t%20b%20-%20C)%20=%20r^2)
 
-<=> ![](http://latex.codecogs.com/gif.latex?t^2 \mathbf{b} \cdot \mathbf{b}+ 2t \mathbf{b} \cdot (\mathbf{A}-\mathbf{C}) + (\mathbf{A}-\mathbf{C}) \cdot (\mathbf{A}-\mathbf{C}) - r^2 = 0)
+<=> ![](http://latex.codecogs.com/gif.latex?t^2%20b%20\cdot%20b+%202t%20b%20\cdot%20(A-C)%20+%20(A-C)%20\cdot%20(A-C)%20-%20r^2%20=%200)
 
 ![fig.ray-sphere](note images/fig.ray-sphere.jpg)
 
@@ -16,7 +16,7 @@
 
 ### Output Display
 
-A simple red sphere
+A simple red sphere.
 
 ![output](output.png)
 

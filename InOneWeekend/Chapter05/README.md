@@ -8,9 +8,9 @@
 
 ### Simplifying Intersection Calculation
 
-Let ![](http://latex.codecogs.com/gif.latex?b = 2h), then:
+Let ![](http://latex.codecogs.com/gif.latex?b%20=%202%20h), then:
 
-![](http://latex.codecogs.com/gif.latex?\frac{-b \pm \sqrt{b^2 - 4ac}}{2a}) <=> ![](http://latex.codecogs.com/gif.latex?\frac{-h \pm \sqrt{h^2 - ac}}{a})
+![](http://latex.codecogs.com/gif.latex?\frac{-b%20\pm%20\sqrt{b^2%20-%204a%20c}}{2a}) <=> ![](http://latex.codecogs.com/gif.latex?\frac{-h%20\pm%20\sqrt{h^2%20-%20a%20c}}{a})
 
 
 
@@ -22,7 +22,7 @@ Let ![](http://latex.codecogs.com/gif.latex?b = 2h), then:
 
 ### Output Display
 
-A  normals-colored sphere with ground
+A  normals-colored sphere with ground.
 
 ![output](output.png)
 

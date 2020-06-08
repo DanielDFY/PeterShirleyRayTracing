@@ -1,7 +1,10 @@
 #pragma once
 
-#include <Vec3.h>
 #include <iostream>
+
+#include <Vec3.h>
+
+#include <helperUtils.h>
 
 class Color : public Vec3 {
 public:
@@ -9,20 +12,20 @@ public:
     Color(double e1, double e2, double e3) : Vec3(e1, e2, e3) {}
     Color(Vec3 v) : Color(v.x(), v.y(), v.z()) {}
 
-    void clamp(int samplesPerPixel) {
-        const double scale = 1.0 / static_cast<double>(samplesPerPixel);
-        _elem[0] *= scale;
-        _elem[1] *= scale;
-        _elem[2] *= scale;
+    void gammaCorrect() {
+        // gamma-correct for gamma=2.0.
+        _elem[0] = sqrt(_elem[0]);
+        _elem[1] = sqrt(_elem[1]);
+        _elem[2] = sqrt(_elem[2]);
     }
 	
-    double r() const { return _elem[0]; }
-    double g() const { return _elem[1]; }
-    double b() const { return _elem[2]; }
+    double r() const { return clamp(_elem[0], 0.0, 1.0); }
+    double g() const { return clamp(_elem[1], 0.0, 1.0); }
+    double b() const { return clamp(_elem[2], 0.0, 1.0); }
 
-    double r8bit() const { return 255 * _elem[0]; }
-    double g8bit() const { return 255 * _elem[1]; }
-    double b8bit() const { return 255 * _elem[2]; }
+    double r8bit() const { return 255 * clamp(_elem[0], 0.0, 1.0); }
+    double g8bit() const { return 255 * clamp(_elem[1], 0.0, 1.0); }
+    double b8bit() const { return 255 * clamp(_elem[2], 0.0, 1.0); }
 };
 
 inline void writeColor8bit(std::ostream& out, Color color) {
