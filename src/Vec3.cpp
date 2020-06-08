@@ -9,9 +9,9 @@ Vec3 randomVec3InUnitSphere() {
 }
 
 Vec3 randomUnitVec3() {
-	const auto a = randomDouble(0, 2 * M_PI);
-	const auto z = randomDouble(-1, 1);
-	const auto r = sqrt(1 - z * z);
+	const auto a = randomDouble(0.0, 2.0 * M_PI);
+	const auto z = randomDouble(-1.0, 1.0);
+	const auto r = sqrt(1.0 - z * z);
 	return { r * cos(a), r * sin(a), z };
 }
 

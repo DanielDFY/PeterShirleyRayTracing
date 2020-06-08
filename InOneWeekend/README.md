@@ -24,6 +24,10 @@
 
 ![](Chapter06/output.png)
 
+### Chapter 07 Diffuse Materials
+
+![](Chapter07/output.png)
+
 
 
 ### Cover
