@@ -15,13 +15,16 @@ bool Sphere::hit(const Ray& r, double tMin, double tMax, HitRecord& rec) const {
 			rec.point = r.at(t);
 			const Vec3 outwardNormal = (rec.point - _center) / _radius;
 			rec.setFaceNormal(r, outwardNormal);
+			rec.matPtr = _matPtr;
 			return true;
 		}
 		t = (-bHalf + root) / a;
 		if (t > tMin && t < tMax) {
 			rec.t = t;
+			rec.point = r.at(t);
 			const Vec3 outwardNormal = (rec.point - _center) / _radius;
 			rec.setFaceNormal(r, outwardNormal);
+			rec.matPtr = _matPtr;
 			return true;
 		}
 	}
