@@ -32,6 +32,10 @@
 
 ![](Chapter08/output.png)
 
+### Chapter 09 Dielectrics
+
+![](Chapter09/output.png)
+
 ### Cover
 
 ![Cover](InOneWeekendCover.png)

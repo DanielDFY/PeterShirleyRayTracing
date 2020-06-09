@@ -80,13 +80,15 @@ int main() {
 	// world objects
 	HittableList worldObjects;
 	worldObjects.add(std::make_shared<Sphere>(
-		Point3(0.0, 0.0, -1.0), 0.5, std::make_shared<Lambertian>(Color(0.7, 0.3, 0.3))));
+		Point3(0.0, 0.0, -1.0), 0.5, std::make_shared<Lambertian>(Color(0.1, 0.2, 0.5))));
 	worldObjects.add(std::make_shared<Sphere>(
 		Point3(0.0, -100.5, -1.0), 100.0, std::make_shared<Lambertian>(Color(0.8, 0.8, 0.0))));
 	worldObjects.add(std::make_shared<Sphere>(
-		Point3(1.0, 0.0, -1.0), 0.5, std::make_shared<Metal>(Color(0.8, 0.6, 0.2), 1.0)));
+		Point3(-1.0, 0.0, -1.0), 0.5, std::make_shared<Metal>(Color(0.8, 0.8, 0.8), 0.5)));
 	worldObjects.add(std::make_shared<Sphere>(
-		Point3(-1.0, 0.0, -1.0), 0.5, std::make_shared<Metal>(Color(0.8, 0.8, 0.8), 0.3)));
+		Point3(1.0, 0.0, -1.0), 0.5, std::make_shared<Dielectric>(1.5)));
+	worldObjects.add(std::make_shared<Sphere>(
+		Point3(1.0, 0.0, -1.0), -0.45, std::make_shared<Dielectric>(1.5)));
 
 	/*
 	 * the pixels are written out in rows with pixels left to right.

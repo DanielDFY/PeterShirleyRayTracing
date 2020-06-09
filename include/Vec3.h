@@ -108,3 +108,5 @@ Vec3 randomVec3InHemisphere(const Vec3& normal);
 inline Vec3 reflect(const Vec3& v, const Vec3& n) {
 	return v - 2.0 * dot(v, n) * n;
 }
+
+Vec3 refract(const Vec3& uv, const Vec3& n, double etaOverEtaPrime);

@@ -18,7 +18,7 @@ Randomize the reflected direction by using a small sphere and choosing a new end
 
 ### Output Display
 
-Metal sphere(fuzz 0.3), lambertian sphere, metal sphere(fuzz 1.0) with ground.
+A metal sphere with fuzz 0.3, a lambertian sphere, a metal sphere with fuzz 1.0 with ground.
 
 ![output](output.png)
 
