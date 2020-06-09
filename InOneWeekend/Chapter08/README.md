@@ -4,7 +4,7 @@
 
 The reflected ray direction in red is just `V - 2 * (V * N) * N` (from `V + 2B`).
 
-![fig.ray-reflect](note images/fig.ray-reflect.jpg)
+![fig.ray-reflect](note%20images/fig.ray-reflect.jpg)
 
 
 
@@ -12,7 +12,7 @@ The reflected ray direction in red is just `V - 2 * (V * N) * N` (from `V + 2B`)
 
 Randomize the reflected direction by using a small sphere and choosing a new endpoint for the ray.
 
-![fig.reflect-fuzzy](note images/fig.reflect-fuzzy.jpg)
+![fig.reflect-fuzzy](note%20images/fig.reflect-fuzzy.jpg)
 
 
 

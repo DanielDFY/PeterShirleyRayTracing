@@ -18,7 +18,7 @@ public:
 
 class Lambertian : public Material{
 public:
-	Lambertian(const Color& a) : _albedo(a) {}
+	Lambertian(const Color& albedo) : _albedo(albedo) {}
 
 	bool scatter(const Ray& rayIn, const HitRecord& rec, Color& attenuation, Ray& scattered) const override;
 	

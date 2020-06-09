@@ -2,7 +2,7 @@
 
 ### Light ray bounces
 
-![fig.light-bounce](note images/fig.light-bounce.jpg)
+![fig.light-bounce](note%20images/fig.light-bounce.jpg)
 
 
 
@@ -10,7 +10,7 @@
 
 There are two unit radius spheres tangent to the hit point pp of a surface. These two spheres have a center of `(P+n)` and `(P−n)`, where `n` is the normal of the surface. The sphere with a center at `(P−n)` is considered *inside* the surface, whereas the sphere with center `(P+n)` is considered *outside* the surface. Select the tangent unit radius sphere that is on the same side of the surface as the ray origin. Pick a random point `S` inside this unit radius sphere and send a ray from the hit point `P` to the random point `S` (this is the vector `(S−P)`)
 
-![fig.rand-vector](note images/fig.rand-vector.jpg)
+![fig.rand-vector](note%20images/fig.rand-vector.jpg)
 
 
 
@@ -37,7 +37,7 @@ Raise the color to the power `1/gamma`.
 * **Rejection**: Pick a random point in the unit cube where x, y, and z all range from −1 to +1. Reject this point and try again if the point is outside the sphere. (scales by the cos<sup>3</sup>(ϕ))
 * **True Lambertian**: Pick points on the surface of the unit sphere, offset along the surface normal.  (scales by the cos(ϕ))
 
-![fig.rand-unitvector](note images/fig.rand-unitvector.png)
+![fig.rand-unitvector](note%20images/fig.rand-unitvector.png)
 
 
 

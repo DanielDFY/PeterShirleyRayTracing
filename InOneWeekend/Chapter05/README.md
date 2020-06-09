@@ -2,7 +2,7 @@
 
 ### Surface Normals
 
-![fig.sphere-normal](note images/fig.sphere-normal.jpg)
+![fig.sphere-normal](note%20images/fig.sphere-normal.jpg)
 
 
 
@@ -16,7 +16,7 @@ Let ![](http://latex.codecogs.com/gif.latex?b%20=%202%20h), then:
 
 ### Possible directions for sphere surface-normal geometry
 
-![fig.normal-possibilities](note images/fig.normal-possibilities.jpg)
+![fig.normal-possibilities](note%20images/fig.normal-possibilities.jpg)
 
 
 

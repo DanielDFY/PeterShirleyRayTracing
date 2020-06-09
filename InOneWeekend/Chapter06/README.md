@@ -4,7 +4,7 @@
 
 For a given pixel we have several samples within that pixel and send rays through each of the samples. The colors of these rays are then averaged.
 
-![fig.pixel-samples](note images/fig.pixel-samples.jpg)
+![fig.pixel-samples](note%20images/fig.pixel-samples.jpg)
 
 
 
