@@ -84,11 +84,11 @@ int main() {
 	worldObjects.add(std::make_shared<Sphere>(
 		Point3(0.0, -100.5, -1.0), 100.0, std::make_shared<Lambertian>(Color(0.8, 0.8, 0.0))));
 	worldObjects.add(std::make_shared<Sphere>(
-		Point3(-1.0, 0.0, -1.0), 0.5, std::make_shared<Metal>(Color(0.8, 0.8, 0.8), 0.5)));
+		Point3(1.0, 0.0, -1.0), 0.5, std::make_shared<Metal>(Color(0.8, 0.8, 0.8), 0.5)));
 	worldObjects.add(std::make_shared<Sphere>(
-		Point3(1.0, 0.0, -1.0), 0.5, std::make_shared<Dielectric>(1.5)));
+		Point3(-1.0, 0.0, -1.0), 0.5, std::make_shared<Dielectric>(1.5)));
 	worldObjects.add(std::make_shared<Sphere>(
-		Point3(1.0, 0.0, -1.0), -0.45, std::make_shared<Dielectric>(1.5)));
+		Point3(-1.0, 0.0, -1.0), -0.45, std::make_shared<Dielectric>(1.5)));
 
 	/*
 	 * the pixels are written out in rows with pixels left to right.
