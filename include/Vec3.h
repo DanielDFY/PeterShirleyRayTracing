@@ -89,10 +89,10 @@ inline double dot(const Vec3& lhs, const Vec3& rhs) {
 	return lhs.x() * rhs.x() + lhs.y() * rhs.y() + lhs.z() * rhs.z();
 }
 
-inline double cross(const Vec3& lhs, const Vec3& rhs) {
-	return lhs.y() * rhs.z() - lhs.z() * rhs.y()
-		+ lhs.z() * rhs.x() - lhs.x() * rhs.z()
-		+ lhs.x() * rhs.y() - lhs.y() * rhs.x();
+inline Vec3 cross(const Vec3& lhs, const Vec3& rhs) {
+	return { lhs.y() * rhs.z() - lhs.z() * rhs.y(),
+		lhs.z() * rhs.x() - lhs.x() * rhs.z(),
+		lhs.x() * rhs.y() - lhs.y() * rhs.x() };
 }
 
 inline Vec3 unitVec3(Vec3 v) {
