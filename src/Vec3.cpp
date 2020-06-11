@@ -23,6 +23,14 @@ Vec3 randomVec3InHemisphere(const Vec3& normal) {
 		return -vec3InUnitSphere;
 }
 
+Vec3 randomVec3InUnitDisk() {
+	while (true) {
+		const auto v = Vec3(randomDouble(-1.0, 1.0), randomDouble(-1.0, 1.0), 0);
+		if (v.lengthSquared() >= 1.0) continue;
+		return v;
+	}
+}
+
 Vec3 refract(const Vec3& uv, const Vec3& n, double etaOverEtaPrime) {
 	const double cosTheta = dot(-uv, n);
 	const Vec3 rayOutParallel = etaOverEtaPrime * (uv + cosTheta * n);

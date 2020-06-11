@@ -36,6 +36,14 @@
 
 ![](Chapter09/output.png)
 
-### Cover
+### Chapter 10 Positionable Camera
 
-![Cover](InOneWeekendCover.png)
+![](Chapter10/output.png)
+
+### Chapter 11 Defocus Blur
+
+![](Chapter11/output.png)
+
+### Chapter 12 Cover Scene
+
+![](Chapter12/output.png)

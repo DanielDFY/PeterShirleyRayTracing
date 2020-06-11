@@ -105,6 +105,8 @@ Vec3 randomUnitVec3();
 
 Vec3 randomVec3InHemisphere(const Vec3& normal);
 
+Vec3 randomVec3InUnitDisk();
+
 inline Vec3 reflect(const Vec3& v, const Vec3& n) {
 	return v - 2.0 * dot(v, n) * n;
 }

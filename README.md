@@ -12,5 +12,5 @@ In each `main.cpp` file, I provide both the code to produce `.ppm` image and the
 
 ### In One Weekend
 
-![InOneWeekendCover](InOneWeekend/InOneWeekendCover.png)
+![InOneWeekendCover](InOneWeekend/Chapter12/output.png)
 
