@@ -11,7 +11,9 @@ public:
 		double vFov = 90,
 		double aspectRatio = 16.0 / 9.0,
 		double aperture = 0.0,
-		double focusDist = 1.0
+		double focusDist = 1.0,
+		double time0 = 0.0,
+		double time1 = 0.0
 	);
 
 	Ray getRay(double s, double t) const;
@@ -23,4 +25,5 @@ private:
 	Vec3 _vertical;
 	Vec3 _u, _v, _w;
 	double _lensRadius;
+	double _time0, _time1;
 };

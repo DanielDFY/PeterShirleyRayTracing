@@ -7,7 +7,9 @@ Camera::Camera(
 	double vFov,
 	double aspectRatio,
 	double aperture,
-	double focusDist) {
+	double focusDist,
+	double time0,
+	double time1) {
 	
 	const double theta = degreeToRadian(vFov);
 	const double h = tan(theta / 2.0);
@@ -23,11 +25,13 @@ Camera::Camera(
 	_vertical = focusDist * viewportHeight * _v;
 	_lowerLeftCorner = _origin - _horizontal / 2 - _vertical / 2 - focusDist * _w;
 	_lensRadius = aperture / 2;
+	_time0 = time0;
+	_time1 = time1;
 }
 
 Ray Camera::getRay(double s, double t) const {
 	const Vec3 rd = _lensRadius * randomVec3InUnitDisk();
 	const Vec3 offset = _u * rd.x() + _v * rd.y();
 	
-	return { _origin + offset, _lowerLeftCorner + s * _horizontal + t * _vertical - _origin - offset };
+	return { _origin + offset, _lowerLeftCorner + s * _horizontal + t * _vertical - _origin - offset, randomDouble(_time0, _time1) };
 }

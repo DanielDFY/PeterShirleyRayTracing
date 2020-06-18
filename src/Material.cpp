@@ -9,7 +9,7 @@ double schlick(double cos, double refIdx) {
 
 bool Lambertian::scatter(const Ray& rayIn, const HitRecord& rec, Vec3& attenuation, Ray& scattered) const {
 	const Vec3 scatterDirection = rec.normal + randomUnitVec3();
-	scattered = Ray(rec.point, scatterDirection);
+	scattered = Ray(rec.point, scatterDirection, rayIn.time());
 	attenuation = _albedo;
 	return true;
 }
