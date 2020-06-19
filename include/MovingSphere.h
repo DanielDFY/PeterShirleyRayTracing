@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Hittable.h>
-#include <memory.h>
+#include <memory>
 
 class MovingSphere : public Hittable {
 public:
@@ -18,6 +18,7 @@ public:
 	_matPtr(std::move(matPtr)) { }
 
 	bool hit(const Ray& r, double tMin, double tMax, HitRecord& rec) const override;
+	bool boundingBox(double t0, double t1, AABB& outputBox) const override;
 
 	Point3 center(double time) const {
 		return _center0 + ((time - _time0) / (_time1 - _time0)) * (_center1 - _center0);

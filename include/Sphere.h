@@ -13,6 +13,7 @@ public:
 	std::shared_ptr<Material> matPtr() const { return _matPtr; };
 
 	bool hit(const Ray& r, double tMin, double tMax, HitRecord& rec) const override;
+	bool boundingBox(double t0, double t1, AABB& outputBox) const override;
 
 private:
 	Point3 _center;

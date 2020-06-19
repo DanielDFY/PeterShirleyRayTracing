@@ -14,3 +14,15 @@ bool AABB::hit(const Ray& r, double tMin, double tMax) const {
     }
     return true;
 }
+
+AABB surroundingBox(AABB box0, AABB box1) {
+    const Point3 smallPoint(fmin(box0.minPoint().x(), box1.minPoint().x()),
+        fmin(box0.minPoint().y(), box1.minPoint().y()),
+        fmin(box0.minPoint().z(), box1.minPoint().z()));
+
+    const Point3 bigPoint(fmax(box0.maxPoint().x(), box1.maxPoint().x()),
+        fmax(box0.maxPoint().y(), box1.maxPoint().y()),
+        fmax(box0.maxPoint().z(), box1.maxPoint().z()));
+
+    return { smallPoint, bigPoint };
+}

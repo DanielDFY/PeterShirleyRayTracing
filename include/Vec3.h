@@ -14,6 +14,8 @@ public:
 	double y() const { return _elem[1]; }
 	double z() const { return _elem[2]; }
 
+	double elem(size_t i) const { return _elem[i]; }
+
 	Vec3 operator-() const { return { -_elem[0], -_elem[1], -_elem[2] }; }
 	double operator[](int i) const { return _elem[i]; }
 	double& operator[](int i) { return _elem[i]; }

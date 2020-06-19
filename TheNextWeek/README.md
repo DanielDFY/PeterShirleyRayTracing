@@ -6,4 +6,6 @@
 
 ### Chapter 02 Bounding Volume Hierarchies
 
-![](Chapter02/output.png)
+No output image in this chapter.
+
+### Chapter 03 Solid Textures

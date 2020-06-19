@@ -1,4 +1,4 @@
-# Chapter 07
+# Chapter 02
 
 ### Bounding volume hierarchy
 
@@ -44,9 +44,15 @@ if ![](http://latex.codecogs.com/gif.latex?b_x%20=%200) and either ![](http://la
 
 
 
+### Splitting BVH Volumes
+
+1. randomly choose an axis
+2. sort the primitives (`using std::sort`)
+3. put half in each subtree
+
+
+
 ### Output Display
 
-A  normals-colored sphere above ground with anti-aliased pixels 
-
-![output](output.png)
+No output image in this chapter.
 

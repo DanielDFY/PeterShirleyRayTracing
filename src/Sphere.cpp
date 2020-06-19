@@ -31,3 +31,14 @@ bool Sphere::hit(const Ray& r, double tMin, double tMax, HitRecord& rec) const {
 
 	return false;
 }
+
+bool Sphere::boundingBox(double t0, double t1, AABB& outputBox) const {
+	const Vec3 halfVec(_radius, _radius, _radius);
+	
+	outputBox = AABB(
+		_center - halfVec,
+		_center + halfVec
+	);
+	
+	return true;
+}

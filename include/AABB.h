@@ -18,3 +18,5 @@ private:
 	Point3 _minPoint;
 	Point3 _maxPoint;
 };
+
+AABB surroundingBox(AABB box0, AABB box1);
