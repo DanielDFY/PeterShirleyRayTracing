@@ -1,11 +1,13 @@
-#include <BVHNode.h>
+#include <BVH.h>
 
 #include <algorithm>
+#include <functional>
 
 BVHNode::BVHNode(std::vector<std::shared_ptr<Hittable>>& objects, size_t start, size_t end, double time0, double time1) {
 	const int axis = randomInt(0, 2);
 
-	const auto comparator = (axis == 0) ? boxCompareX : (axis == 1) ? boxCompareY : boxCompareZ;
+	const auto comparatorBase = (axis == 0) ? boxCompareX : (axis == 1) ? boxCompareY : boxCompareZ;
+	const auto comparator = std::bind(comparatorBase, std::placeholders::_1, std::placeholders::_2, time0, time1);
 
 	const size_t objectSpan = end - start;
 

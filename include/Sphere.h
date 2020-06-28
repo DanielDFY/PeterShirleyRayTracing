@@ -1,6 +1,9 @@
 #pragma once
 
+#include <cmath>
+
 #include <Hittable.h>
+#include <helperUtils.h>
 
 class Sphere : public Hittable {
 public:
@@ -20,3 +23,10 @@ private:
 	double _radius;
 	std::shared_ptr<Material> _matPtr;
 };
+
+inline void getSphereUV(const Point3& point, double& u, double& v) {
+	const double phi = atan2(point.z(), point.x());
+	const double theta = asin(point.y());
+	u = 0.5 - phi / (2 * M_PI);		// 1-(phi + M_PI) / (2*M_PI);
+	v = theta / M_PI + 0.5;			// (theta + M_PI/2) / M_PI;
+}

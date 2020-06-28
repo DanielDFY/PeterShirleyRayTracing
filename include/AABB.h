@@ -19,4 +19,4 @@ private:
 	Point3 _maxPoint;
 };
 
-AABB surroundingBox(AABB box0, AABB box1);
+AABB surroundingBox(const AABB& box0, const AABB& box1);

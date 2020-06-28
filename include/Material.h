@@ -3,6 +3,7 @@
 #include <Ray.h>
 #include <Hittable.h>
 #include <Color.h>
+#include <Texture.h>
 
 double schlick(double cos, double refIdx);
 
@@ -20,12 +21,13 @@ public:
 
 class Lambertian : public Material{
 public:
-	Lambertian(const Color& albedo) : _albedo(albedo) {}
+	Lambertian(std::shared_ptr<Texture> albedoPtr) : _albedoPtr(std::move(albedoPtr)) {}
+	Lambertian(const Color& albedo) : Lambertian(std::make_shared<SolidColor>(albedo)) {}
 
 	bool scatter(const Ray& rayIn, const HitRecord& rec, Vec3& attenuation, Ray& scattered) const override;
 	
 private:
-	Color _albedo;
+	std::shared_ptr<Texture> _albedoPtr;
 };
 
 class Metal : public Material {

@@ -6,6 +6,12 @@
 
 ### Chapter 02 Bounding Volume Hierarchies
 
-No output image in this chapter.
+![](Chapter02/output.png)
 
 ### Chapter 03 Solid Textures
+
+![](Chapter03/output.png)
+
+### Chapter 04 Perlin Noise
+
+![](Chapter04/output.png)

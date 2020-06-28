@@ -3,8 +3,8 @@
 bool AABB::hit(const Ray& r, double tMin, double tMax) const {
     for (int i = 0; i < 3; ++i) {
         const double invD = 1.0f / r.direction()[i];
-        const double t0 = (_minPoint[i] - r.origin()[i]) * invD;
-        const double t1 = (_maxPoint[i] - r.origin()[i]) * invD;
+        double t0 = (_minPoint[i] - r.origin()[i]) * invD;
+        double t1 = (_maxPoint[i] - r.origin()[i]) * invD;
         if (invD < 0.0f)
             std::swap(t0, t1);
         tMin = t0 > tMin ? t0 : tMin;
@@ -15,7 +15,7 @@ bool AABB::hit(const Ray& r, double tMin, double tMax) const {
     return true;
 }
 
-AABB surroundingBox(AABB box0, AABB box1) {
+AABB surroundingBox(const AABB& box0, const AABB& box1) {
     const Point3 smallPoint(fmin(box0.minPoint().x(), box1.minPoint().x()),
         fmin(box0.minPoint().y(), box1.minPoint().y()),
         fmin(box0.minPoint().z(), box1.minPoint().z()));

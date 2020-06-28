@@ -21,23 +21,23 @@ private:
 	AABB _boundingBox;
 };
 
-inline bool boxCompare(const std::shared_ptr<Hittable>& a, const std::shared_ptr<Hittable>& b, int axis) {
+inline bool boxCompare(const std::shared_ptr<Hittable>& a, const std::shared_ptr<Hittable>& b, int axis, double time0, double time1) {
 	AABB boxA, boxB;
 	
-	if (!a->boundingBox(0, 0, boxA) || !b->boundingBox(0, 0, boxB))
+	if (!a->boundingBox(time0, time1, boxA) || !b->boundingBox(time0, time1, boxB))
 		std::cerr << "No bounding box in BVHNode constructor." << std::endl;
 
 	return boxA.minPoint().elem(axis) < boxB.minPoint().elem(axis);
 }
 
-inline bool boxCompareX(const std::shared_ptr<Hittable>& a, const std::shared_ptr<Hittable>& b) {
-	return boxCompare(a, b, 0);
+inline bool boxCompareX(const std::shared_ptr<Hittable>& a, const std::shared_ptr<Hittable>& b, double time0, double time1) {
+	return boxCompare(a, b, 0, time0, time1);
 }
 
-inline bool boxCompareY(const std::shared_ptr<Hittable>& a, const std::shared_ptr<Hittable>& b) {
-	return boxCompare(a, b, 1);
+inline bool boxCompareY(const std::shared_ptr<Hittable>& a, const std::shared_ptr<Hittable>& b, double time0, double time1) {
+	return boxCompare(a, b, 1, time0, time1);
 }
 
-inline bool boxCompareZ(const std::shared_ptr<Hittable>& a, const std::shared_ptr<Hittable>& b) {
-	return boxCompare(a, b, 2);
+inline bool boxCompareZ(const std::shared_ptr<Hittable>& a, const std::shared_ptr<Hittable>& b, double time0, double time1) {
+	return boxCompare(a, b, 2, time0, time1);
 }

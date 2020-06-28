@@ -38,13 +38,13 @@ bool MovingSphere::boundingBox(double t0, double t1, AABB& outputBox) const {
 	const Vec3 halfVec(_radius, _radius, _radius);
 	
 	const AABB box0(
-		_center0 - halfVec,
-		_center0 + halfVec
+		center(t0) - halfVec,
+		center(t0) + halfVec
 	);
 
 	const AABB box1(
-		_center1 - halfVec,
-		_center1 + halfVec
+		center(t1) - halfVec,
+		center(t1) + halfVec
 	);
 	outputBox = surroundingBox(box0, box1);
 	return true;

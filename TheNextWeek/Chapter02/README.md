@@ -54,5 +54,6 @@ if ![](http://latex.codecogs.com/gif.latex?b_x%20=%200) and either ![](http://la
 
 ### Output Display
 
-No output image in this chapter.
+Render with BVH.
 
+![output](output.png)

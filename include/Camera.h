@@ -25,5 +25,5 @@ private:
 	Vec3 _vertical;
 	Vec3 _u, _v, _w;
 	double _lensRadius;
-	double _time0, _time1;
+	double _time0, _time1;	// shutter open/close times
 };
