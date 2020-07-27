@@ -6,10 +6,9 @@
 #include <Ray.h>
 #include <HittableList.h>
 #include <Sphere.h>
-#include <MovingSphere.h>
 #include <Camera.h>
 #include <Material.h>
-#include <BVHNode.h>
+#include <BVH.h>
 
 #include <helperUtils.h>
 
@@ -21,55 +20,14 @@
 #include <stb/stb_image_write.h>
 #endif
 
-HittableList randomScene() {
-	HittableList worldObjList;
+HittableList twoPerlinSpheres() {
+	HittableList objects;
 
-	auto checkerMat = std::make_shared<CheckerTexture>(
-		std::make_shared<SolidColor>(0.2, 0.3, 0.1),
-		std::make_shared<SolidColor>(0.9, 0.9, 0.9)
-		);
+	auto pertext = std::make_shared<NoiseTexture>(4);
+	objects.add(std::make_shared<Sphere>(Point3(0.0, -1000.0, 0.0), 1000.0, std::make_shared<Lambertian>(pertext)));
+	objects.add(std::make_shared<Sphere>(Point3(0.0, 2.0, 0.0), 2.0, std::make_shared<Lambertian>(pertext)));
 
-	const auto groundMat = std::make_shared<Lambertian>(checkerMat);
-	worldObjList.add(std::make_shared<Sphere>(Point3(0.0, -1000.0, 0.0), 1000, groundMat));
-
-	for (int a = -11; a < 11; ++a) {
-		for (int b = -11; b < 11; ++b) {
-			const double chooseMat = randomDouble();
-			const Point3 center(a + 0.9 * randomDouble(), 0.2, b + 0.9 * randomDouble());
-
-			if ((center - Point3(4.0, 0.2, 0)).lengthSquared() > 0.81) {
-				std::shared_ptr<Material> sphereMat;
-
-				if (chooseMat < 0.8) {
-					// diffuse
-					const auto albedo = Color::random() * Color::random();
-					sphereMat = std::make_shared<Lambertian>(albedo);
-					const Point3 centerMoved = center + Vec3(0.0, randomDouble(0.0, 0.5), 0);
-					worldObjList.add(std::make_shared<MovingSphere>(center, centerMoved, 0.0, 1.0, 0.2, sphereMat));
-				} else if (chooseMat < 0.95) {
-					// metal
-					const auto albedo = Color::random(0.5, 1.0);
-					const auto fuzz = randomDouble(0.0, 0.5);
-					sphereMat = std::make_shared<Metal>(albedo, fuzz);
-					worldObjList.add(std::make_shared<Sphere>(center, 0.2, sphereMat));
-				} else {
-					// glass
-					sphereMat = std::make_shared<Dielectric>(1.5);
-					worldObjList.add(std::make_shared<Sphere>(center, 0.2, sphereMat));
-				}
-			}
-		}
-	}
-	const auto largeDielectric = std::make_shared<Dielectric>(1.5);
-	worldObjList.add(std::make_shared<Sphere>(Point3(0.0, 1.0, 0.0), 1.0, largeDielectric));
-
-	const auto largeLambertian = std::make_shared<Lambertian>(Color(0.4, 0.2, 0.1));
-	worldObjList.add(std::make_shared<Sphere>(Point3(-4.0, 1.0, 0.0), 1.0, largeLambertian));
-
-	const auto largeMetal = std::make_shared<Metal>(Color(0.7, 0.6, 0.5), 0.0);
-	worldObjList.add(std::make_shared<Sphere>(Point3(4.0, 1.0, 0.0), 1.0, largeMetal));
-
-	return HittableList(std::make_shared<BVHNode>(worldObjList, 0.0, 1.0));
+	return objects;
 }
 
 Color rayColor(const Ray& r, const Hittable& hittable, const int depthRemaining) {
@@ -134,10 +92,13 @@ int main() {
 	const double vFov = 20.0;
 	const double aperture = 0.0;
 	const double distToFocus = 10.0;
-	Camera camera(lookFrom, lookAt, vUp, vFov, aspectRatio, aperture, distToFocus, 0.0, 1.0);
+	const double time0 = 0.0;
+	const double time1 = 1.0;
+	Camera camera(lookFrom, lookAt, vUp, vFov, aspectRatio, aperture, distToFocus, time0, time1);
 
 	// world objects
-	HittableList worldObjects = randomScene();
+	HittableList worldObjects = twoPerlinSpheres();
+	BVHNode worldObjectsBVHTree(worldObjects, time0, time1);
 
 	/*
 	 * the pixels are written out in rows with pixels left to right.
@@ -155,7 +116,7 @@ int main() {
 
 				const Ray r = camera.getRay(u, v);
 
-				pixelColor += rayColor(r, worldObjects, maxDepth);
+				pixelColor += rayColor(r, worldObjectsBVHTree, maxDepth);
 			}
 
 			pixelColor /= samplesPerPixel;

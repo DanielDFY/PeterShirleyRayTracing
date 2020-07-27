@@ -50,3 +50,24 @@ private:
 	Perlin _noise;
 	double _scale;
 };
+
+class ImageTexture : public Texture {
+public:
+	constexpr static int bytesPerPixel = 3;
+
+	ImageTexture() : _data(nullptr), _width(0), _height(0),
+	_bytesPerScanline(0) { }
+
+	ImageTexture(const char* fileName);
+
+	~ImageTexture() {
+		delete _data;
+	}
+
+	Color value(double u, double v, const Point3& point) const override;
+
+private:
+	unsigned char* _data;
+	int _width, _height;
+	int _bytesPerScanline;
+};

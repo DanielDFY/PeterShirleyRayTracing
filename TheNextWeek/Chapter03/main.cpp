@@ -9,7 +9,7 @@
 #include <MovingSphere.h>
 #include <Camera.h>
 #include <Material.h>
-#include <BVHNode.h>
+#include <BVH.h>
 
 #include <helperUtils.h>
 
