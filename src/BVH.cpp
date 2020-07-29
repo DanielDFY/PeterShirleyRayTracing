@@ -46,7 +46,7 @@ bool BVHNode::hit(const Ray& r, double tMin, double tMax, HitRecord& rec) const 
 		return false;
 
 	const bool isLeftHit = _leftPtr->hit(r, tMin, tMax, rec);
-	const bool isRightHit = _rightPtr->hit(r, tMin, tMax, rec);
+	const bool isRightHit = _rightPtr->hit(r, tMin, isLeftHit ? rec.t : tMax, rec);
 
 	return isLeftHit || isRightHit;
 }
