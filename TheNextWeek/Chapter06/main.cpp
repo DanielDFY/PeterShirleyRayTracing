@@ -9,6 +9,7 @@
 #include <Camera.h>
 #include <Material.h>
 #include <BVH.h>
+#include <AARect.h>
 
 #include <helperUtils.h>
 
@@ -20,43 +21,50 @@
 #include <stb/stb_image_write.h>
 #endif
 
-HittableList twoPerlinSpheres() {
+HittableList cornellBox() {
 	HittableList objects;
 
-	auto pertext = std::make_shared<NoiseTexture>(4);
-	objects.add(std::make_shared<Sphere>(Point3(0.0, -1000.0, 0.0), 1000.0, std::make_shared<Lambertian>(pertext)));
-	objects.add(std::make_shared<Sphere>(Point3(0.0, 2.0, 0.0), 2.0, std::make_shared<Lambertian>(pertext)));
+	auto redMat = std::make_shared<Lambertian>(Color(0.65, 0.05, 0.05));
+	auto whiteMat = std::make_shared<Lambertian>(Color(0.73, 0.73, 0.73));
+	auto greenMat = std::make_shared<Lambertian>(Color(0.12, 0.45, 0.15));
+	auto lightMat = std::make_shared<DiffuseLight>(Color(15.0, 15.0, 15.0));
 
+	objects.add(std::make_shared<YZRect>(0.0, 555.0, 0.0, 555.0, 555.0, greenMat));
+	objects.add(std::make_shared<YZRect>(0.0, 555.0, 0.0, 555.0, 0.0, redMat));
+	objects.add(std::make_shared<XZRect>(213.0, 343.0, 227.0, 332.0, 554.0, lightMat));
+	objects.add(std::make_shared<XZRect>(0.0, 555.0, 0.0, 555.0, 0.0, whiteMat));
+	objects.add(std::make_shared<XZRect>(0.0, 555.0, 0.0, 555.0, 555.0, whiteMat));
+	objects.add(std::make_shared<XYRect>(0.0, 555.0, 0.0, 555.0, 555.0, whiteMat));
+	
 	return objects;
 }
 
-Color rayColor(const Ray& r, const Hittable& hittable, const int depthRemaining) {
+Color rayColor(const Ray& r, const Color& background, const Hittable& hittable, const int depthRemaining) {
 	if (depthRemaining <= 0) {
 		return { 0.0, 0.0, 0.0 };
 	}
 	
 	HitRecord rec;
-	if (hittable.hit(r, 0.0001, M_DOUBLE_INFINITY, rec)) {
-		Ray scattered;
-		Color attenuation;
-		if (rec.matPtr->scatter(r, rec, attenuation, scattered)) {
-			return attenuation * rayColor(scattered, hittable, depthRemaining - 1);
-		}
-		return { 0.0, 0.0, 0.0 };
-	}
+	if (!hittable.hit(r, 0.0001, M_DOUBLE_INFINITY, rec))
+		return background;
 
-	const Vec3 unitDirection = unitVec3(r.direction());
-	const double t = 0.5 * (unitDirection.y() + 1.0);
-	return (1.0 - t) * Color(1.0, 1.0, 1.0) + t * Color(0.5, 0.7, 1.0);
+	Ray scattered;
+	Color attenuation;
+	Color emitted = rec.matPtr->emitted(rec.u, rec.v, rec.point);
+	
+	if (!rec.matPtr->scatter(r, rec, attenuation, scattered)) {
+		return emitted;
+	}
+	return emitted + attenuation * rayColor(scattered, background, hittable, depthRemaining - 1);
 }
 
 int main() {
 	/* image config */
-	constexpr double aspectRatio = 16.0 / 9.0;
-	constexpr int imageWidth = 800;
+	constexpr double aspectRatio = 1.0;
+	constexpr int imageWidth = 600;
 	constexpr auto imageHeight = static_cast<int>(imageWidth / aspectRatio);
-	constexpr int samplesPerPixel = 20;
-	constexpr int maxDepth = 5;
+	constexpr int samplesPerPixel = 100;
+	constexpr int maxDepth = 50;
 
 	/* image output file */
 	const std::string fileName("output");
@@ -86,18 +94,20 @@ int main() {
 	#endif
 
 	/* camera config */
-	const Point3 lookFrom(13.0, 2.0, 3.0);
-	const Point3 lookAt(0.0, 0.0, 0.0);
+	const Point3 lookFrom(278.0, 278.0, -800.0);
+	const Point3 lookAt(278.0, 278.0, 0.0);
 	const Vec3 vUp(0, 1, 0);
-	const double vFov = 20.0;
+	const double vFov = 40.0;
 	const double aperture = 0.0;
 	const double distToFocus = 10.0;
 	const double time0 = 0.0;
-	const double time1 = 1.0;
+	const double time1 = 0.0;
+	const Color background(0.0, 0.0, 0.0);
+	
 	Camera camera(lookFrom, lookAt, vUp, vFov, aspectRatio, aperture, distToFocus, time0, time1);
 
 	// world objects
-	HittableList worldObjects = twoPerlinSpheres();
+	HittableList worldObjects = cornellBox();
 	BVHNode worldObjectsBVHTree(worldObjects, time0, time1);
 
 	/*
@@ -116,7 +126,7 @@ int main() {
 
 				const Ray r = camera.getRay(u, v);
 
-				pixelColor += rayColor(r, worldObjectsBVHTree, maxDepth);
+				pixelColor += rayColor(r, background, worldObjectsBVHTree, maxDepth);
 			}
 
 			pixelColor /= samplesPerPixel;
